@@ -1,0 +1,62 @@
+.container {
+  margin:0 auto;
+  width: 720px;
+}
+
+.blank-row {
+  margin-top: 25px;
+}
+
+.header {
+  height: 112px;
+}
+
+.outline {
+  border:1px solid black;
+}
+
+
+.smiley {
+ padding-top: 5px;
+ padding-bottom: 6px;
+ text-align: center;
+}
+
+.smiley img {
+  width: 100px;
+  height: 100px
+}
+
+.logo {
+  text-align: center;
+}
+
+.logo img {
+  height: 50px;
+}
+
+.title {
+  margin-top: 0;
+  font-size: 45px;
+  font-weight: 400;
+  margin-bottom: 12px;
+}
+
+.pick-list {
+  padding: 25px 55px;
+}
+
+div > input {
+  margin-bottom: 15px;
+}
+
+.story {
+  text-align: center;
+  padding: 25px 55px;
+}
+
+span.words {
+  text-decoration: underline;
+  color: red;
+  font-weight: bold;
+}
