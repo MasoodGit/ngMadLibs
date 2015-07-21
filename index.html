@@ -2,9 +2,14 @@
 <html ng-app="">
 <head>
   <title>ngMadLibs</title>
-  <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="style.css">
-  <script type="text/javascript" src="angular.js"></script>
+<!--   <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+ --> 
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="style.css">
+<!-- <script type="text/javascript" src="angular.js"></script>
+ -->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.9/angular.min.js"></script>
 </head>
 <body ng-init="male_name='Male name';dirty_task='Dirty task';obnoxious_celebrity='Obnoxious celebrity';job_title ='Job title';celebrity='Celebrity';huge_number='Huge number';
               tedious_task ='Tedious task';useless_skill='Useless skill';adjective='Adjective'">
@@ -29,7 +34,7 @@
         <input type="text" class="form-control" ng-model="male_name" placeholder="male name" autofocus>
       </div>
       <div class="col-md-4">
-        <input type="text"  ng-model="dirty_task" placeholder="dirty task">
+        <input type="text" class="form-control" ng-model="dirty_task" placeholder="dirty task">
       </div>
       <div class="col-md-4">
         <input type="text" class="form-control" ng-model="obnoxious_celebrity" placeholder="obnoxious celebrity">
@@ -51,7 +56,7 @@
         <input type="text" class="form-control" ng-model="tedious_task" placeholder="tedious task">
       </div>
       <div class="col-md-4">
-        <input type="text"  ng-model="useless_skill" placeholder="useless skill">
+        <input type="text"  class="form-control" ng-model="useless_skill" placeholder="useless skill">
       </div>
       <div class="col-md-4">
         <input type="text" class="form-control" ng-model="adjective" placeholder="adjective">
