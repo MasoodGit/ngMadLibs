@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="">
+<html ng-app="madLibsApp">
 <head>
   <title>ngMadLibs</title>
 <!--   <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
@@ -10,9 +10,9 @@
 <!-- <script type="text/javascript" src="angular.js"></script>
  -->
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.9/angular.min.js"></script>
+<script type="text/javascript" src="app.js"></script>
 </head>
-<body ng-init="male_name='Male name';dirty_task='Dirty task';obnoxious_celebrity='Obnoxious celebrity';job_title ='Job title';celebrity='Celebrity';huge_number='Huge number';
-              tedious_task ='Tedious task';useless_skill='Useless skill';adjective='Adjective'">
+<body ng-controller="madLibsController">
 <div class="container">
   <div class="row">
     <div class="col-md-12 blank-row"></div>
@@ -31,35 +31,38 @@
     <h2>Provide the following words: </h2>
     <div class="text-center row">
       <div class="col-md-4">
-        <input type="text" class="form-control" ng-model="male_name" placeholder="male name" autofocus>
+        <input type="text" class="form-control" 
+        ng-model = "words.male_name" placeholder="Male name" autofocus>
       </div>
       <div class="col-md-4">
-        <input type="text" class="form-control" ng-model="dirty_task" placeholder="dirty task">
+        <input type="text" class="form-control" 
+        ng-model="words.dirty_task" placeholder="dirty task">
       </div>
       <div class="col-md-4">
-        <input type="text" class="form-control" ng-model="obnoxious_celebrity" placeholder="obnoxious celebrity">
-      </div>
-    </div>
-    <div class="text-center row">
-      <div class="col-md-4">
-        <input type="text" class="form-control" ng-model="job_title" placeholder="job title">
-      </div>
-      <div class="col-md-4">
-        <input type="text" class="form-control" ng-model="celebrity" placeholder="celebrity">
-      </div>
-      <div class="col-md-4">
-        <input type="text" class="form-control" ng-model="huge_number" placeholder="huge number">
+        <input type="text" class="form-control" 
+        ng-model="words.obnoxious_celebrity" placeholder="obnoxious celebrity">
       </div>
     </div>
     <div class="text-center row">
       <div class="col-md-4">
-        <input type="text" class="form-control" ng-model="tedious_task" placeholder="tedious task">
+        <input type="text" class="form-control" ng-model="words.job_title" placeholder="job title">
       </div>
       <div class="col-md-4">
-        <input type="text"  class="form-control" ng-model="useless_skill" placeholder="useless skill">
+        <input type="text" class="form-control" ng-model="words.celebrity" placeholder="celebrity">
       </div>
       <div class="col-md-4">
-        <input type="text" class="form-control" ng-model="adjective" placeholder="adjective">
+        <input type="text" class="form-control" ng-model="words.huge_number" placeholder="huge number">
+      </div>
+    </div>
+    <div class="text-center row">
+      <div class="col-md-4">
+        <input type="text" class="form-control" ng-model="words.tedious_task" placeholder="tedious task">
+      </div>
+      <div class="col-md-4">
+        <input type="text"  class="form-control" ng-model="words.useless_skill" placeholder="useless skill">
+      </div>
+      <div class="col-md-4">
+        <input type="text" class="form-control" ng-model="words.adjective" placeholder="adjective">
       </div>
     </div>
     </div>
@@ -67,11 +70,19 @@
   <div class="outline row">
     <div class="story">
     <p class="text-left">
-    <span class="words">{{male_name}}</span> was a <span >{{job_title}}</span> who loved technology. Although he loved parts of her job, he absolutely hated  <span class='words'>{{tedious_task}}</span> and <span class='words'>{{dirty_task}}</span>. So, <span class='words'>{{male_name}}</span> met with his life mentor <span class='words'>{{celebrity}}</span> who told him to learn how to <span class='words'>{{useless_skill}}</span> with Thinkful. Thinkful didn't offer a course on <span class='words'>{{useless_skill}}</span> so he studied programming instead.
+    <span class="words">{{words.male_name}}</span> was a <span >{{words.job_title}}</span> who loved technology. Although  <span ng-if="gender=='Male'">he</span> <span ng-if="gender=='Female'">she </span>  loved parts of <span ng-if="gender=='Male'">his</span> <span ng-if="gender=='Female'">her</span> job, <span ng-if="gender=='Male'">he</span> <span ng-if="gender=='Female'">she</span> absolutely hated  <span class='words'>{{words.tedious_task}}</span> and <span class='words'>{{words.dirty_task}}</span>. So, <span class='words'>{{words.male_name}}</span> met with <span ng-if="gender=='Male'">his</span> <span ng-if="gender=='Female'">her</span> life mentor <span class='words'>{{words.celebrity}}</span> who told <span ng-if="gender=='Male'">him</span> <span ng-if="gender=='Female'">her</span> to learn how to <span class='words'>{{words.useless_skill}}</span> with Thinkful. Thinkful didn't offer a course on <span class='words'>{{words.useless_skill}}</span> so <span ng-if="gender=='Male'">he</span> <span ng-if="gender=='Female'">she</span> studied programming instead.
     </p>
     <p class="text-left">
-    What a great decision! With his new skills, <span class='words'>{{male_name}}</span> built a(n) <span class='words'>{{adjective}}</span> robot named <span class='words'>{{obnoxious_celebrity}}</span> that not only loved <span class='words'>{{dirty_task}}</span> but did it <span class='words'>{{huge_number}}</span> faster.
+    What a great decision! With <span ng-if="gender=='Male'">his</span> <span ng-if="gender=='Female'">her</span> new skills, <span class='words'>{{words.male_name}}</span> built a(n) <span class='words'>{{words.adjective}}</span> robot named <span class='words'>{{words.obnoxious_celebrity}}</span> that not only loved <span class='words'>{{words.dirty_task}}</span> but did it <span class='words'>{{words.huge_number}}</span> faster.
     </p>
+    <div>
+     <label class="radio-inline">
+       <input type="radio" ng-model = "gender" value="Male"> Male
+     </label>
+     <label class="radio-inline">
+       <input type="radio" ng-model = "gender" value="Female"> Female
+     </label>
+    </div>
     </div>
   </div>
 </div>
