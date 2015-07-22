@@ -10,7 +10,20 @@
 <!-- <script type="text/javascript" src="angular.js"></script>
  -->
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.9/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.9/angular-messages.js"></script>
+<!-- <script type="text/javascript" src="angular-messages.js"></script> -->
 <script type="text/javascript" src="app.js"></script>
+<script type="text/ng-template" id="error-messages">
+          <p ng-message="minlength">Word is too short.</p>
+          <p ng-message="maxlength">Word is too long.</p>
+          <p ng-message="required">Word is required.</p>
+</script>
+<script type="text/ng-template" id="number-error-messages">
+  <p ng-message="min">Number must be in the range of 5 to 100 </p>
+  <p ng-message="max">Number must be in the range of 5 to 100 </p>
+  <p ng-message="number">Enter a number</p>
+  <p ng-message="required">Number is required.</p>
+</script>
 </head>
 <body ng-controller="madLibsController">
 <div class="container">
@@ -27,61 +40,126 @@
     </div>
   </div>
   <div class="row outline">
-  <div class="pick-list">
-    <h2>Provide the following words: </h2>
-    <div class="text-center row">
-      <div class="col-md-4">
-        <input type="text" class="form-control" 
-        ng-model = "words.male_name" placeholder="Male name" autofocus>
-      </div>
-      <div class="col-md-4">
-        <input type="text" class="form-control" 
-        ng-model="words.dirty_task" placeholder="dirty task">
-      </div>
-      <div class="col-md-4">
-        <input type="text" class="form-control" 
-        ng-model="words.obnoxious_celebrity" placeholder="obnoxious celebrity">
-      </div>
-    </div>
-    <div class="text-center row">
-      <div class="col-md-4">
-        <input type="text" class="form-control" ng-model="words.job_title" placeholder="job title">
-      </div>
-      <div class="col-md-4">
-        <input type="text" class="form-control" ng-model="words.celebrity" placeholder="celebrity">
-      </div>
-      <div class="col-md-4">
-        <input type="text" class="form-control" ng-model="words.huge_number" placeholder="huge number">
-      </div>
-    </div>
-    <div class="text-center row">
-      <div class="col-md-4">
-        <input type="text" class="form-control" ng-model="words.tedious_task" placeholder="tedious task">
-      </div>
-      <div class="col-md-4">
-        <input type="text"  class="form-control" ng-model="words.useless_skill" placeholder="useless skill">
-      </div>
-      <div class="col-md-4">
-        <input type="text" class="form-control" ng-model="words.adjective" placeholder="adjective">
-      </div>
-    </div>
-    </div>
-  </div>
-  <div class="outline row">
-    <div class="story">
-    <p class="text-left">
-    <span class="words">{{words.male_name}}</span> was a <span >{{words.job_title}}</span> who loved technology. Although  <span ng-if="gender=='Male'">he</span> <span ng-if="gender=='Female'">she </span>  loved parts of <span ng-if="gender=='Male'">his</span> <span ng-if="gender=='Female'">her</span> job, <span ng-if="gender=='Male'">he</span> <span ng-if="gender=='Female'">she</span> absolutely hated  <span class='words'>{{words.tedious_task}}</span> and <span class='words'>{{words.dirty_task}}</span>. So, <span class='words'>{{words.male_name}}</span> met with <span ng-if="gender=='Male'">his</span> <span ng-if="gender=='Female'">her</span> life mentor <span class='words'>{{words.celebrity}}</span> who told <span ng-if="gender=='Male'">him</span> <span ng-if="gender=='Female'">her</span> to learn how to <span class='words'>{{words.useless_skill}}</span> with Thinkful. Thinkful didn't offer a course on <span class='words'>{{words.useless_skill}}</span> so <span ng-if="gender=='Male'">he</span> <span ng-if="gender=='Female'">she</span> studied programming instead.
-    </p>
-    <p class="text-left">
-    What a great decision! With <span ng-if="gender=='Male'">his</span> <span ng-if="gender=='Female'">her</span> new skills, <span class='words'>{{words.male_name}}</span> built a(n) <span class='words'>{{words.adjective}}</span> robot named <span class='words'>{{words.obnoxious_celebrity}}</span> that not only loved <span class='words'>{{words.dirty_task}}</span> but did it <span class='words'>{{words.huge_number}}</span> faster.
-    </p>
-    <div>
+  <div class="pick-list" ng-hide="submitted == true">
+     <div>
+     <label>Choose Gender :  </label>
      <label class="radio-inline">
        <input type="radio" ng-model = "gender" value="Male"> Male
      </label>
      <label class="radio-inline">
        <input type="radio" ng-model = "gender" value="Female"> Female
      </label>
+    </div>
+
+    <h2>Provide the following words: </h2>
+    <form  name="pickListForm" ng-submit="submit()" novalidate>
+    <div class="text-center row form-group">
+      <div class="col-md-4 ">
+        <input type="text" class="form-control"
+        name="male_name"
+        ng-model = "words.male_name" 
+        placeholder="name" ng-minlength="3"  required >
+        <div class="help-block" 
+        ng-if="interacted(pickListForm.male_name)"
+        ng-messages = "pickListForm.male_name.$error" 
+        ng-messages-include="error-messages">
+        </div>
+      </div>
+      <div class="col-md-4">
+         <input type="text" class="form-control" name="dirty_task"
+         ng-model="words.dirty_task" placeholder="dirty task" ng-minlength="3"
+         required>
+         <div class="help-block" ng-messages="pickListForm.dirty_task.$error"
+         ng-if="interacted(pickListForm.dirty_task)" 
+         ng-messages-include="error-messages">
+        </div>
+      </div>
+      <div class="col-md-4">
+        <input type="text" class="form-control" 
+        name="obnoxious_celebrity"
+        ng-model="words.obnoxious_celebrity" 
+        placeholder="obnoxious celebrity" ng-minlength="3"  required>
+        <div class="help-block" 
+         ng-messages="pickListForm.obnoxious_celebrity.$error" 
+         ng-if="interacted(pickListForm.obnoxious_celebrity)" 
+         ng-messages-include="error-messages">
+        </div>
+      </div>
+    </div>
+    <div class="text-center row form-group">
+      <div class="col-md-4">
+        <input type="text" class="form-control" name="job_title"
+        ng-model="words.job_title" placeholder="job title" ng-minlength="3" 
+        required>
+         <div class="help-block" ng-messages="pickListForm.job_title.$error" 
+         ng-if="interacted(pickListForm.job_title)" 
+         ng-messages-include="error-messages">
+        </div>
+      </div>
+      <div class="col-md-4">
+        <input type="text" class="form-control" name="celebrity"
+        ng-model="words.celebrity" placeholder="celebrity" ng-minlength="3" 
+        required>
+         <div class="help-block" ng-messages="pickListForm.celebrity.$error" 
+         ng-if="interacted(pickListForm.celebrity)" 
+         ng-messages-include="error-messages">
+        </div>
+      </div>
+      <div class="col-md-4">
+        <input type="number" class="form-control" name="huge_number"
+        ng-model="words.huge_number" placeholder="ex: 5 " ng-min="5" ng-max="100" required>
+         <div class="help-block" ng-messages="pickListForm.huge_number.$error" 
+         ng-if="interacted(pickListForm.huge_number)" 
+         ng-messages-include="number-error-messages">
+        </div>
+      </div>
+    </div>
+    <div class="text-center row form-group">
+      <div class="col-md-4">
+        <input type="text" class="form-control" name="tedious_task"
+        ng-model="words.tedious_task" placeholder="tedious task" ng-minlength="3" 
+         required>
+         <div class="help-block" ng-messages="pickListForm.tedious_task.$error" 
+          ng-if="interacted(pickListForm.tedious_task)" 
+          ng-messages-include="error-messages">
+        </div>
+      </div>
+      <div class="col-md-4">
+        <input type="text"  class="form-control"  name="useless_skill"
+        ng-model="words.useless_skill" placeholder="useless skill" ng-minlength="3" 
+         required>
+         <div class="help-block" ng-messages="pickListForm.useless_skill.$error" 
+          ng-if="interacted(pickListForm.useless_skill)" 
+          ng-messages-include="error-messages">
+        </div>
+      </div>
+      <div class="col-md-4">
+        <input type="text" class="form-control" name="adjective"
+        ng-model="words.adjective" placeholder="adjective" ng-minlength="3" 
+        required>
+         <div class="help-block"
+         ng-if="interacted(pickListForm.adjective)"
+         ng-messages="pickListForm.adjective.$error"
+         ng-messages-include="error-messages">
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <input type="submit" class="form-control" name="submit" value="Generate My Mad lib">
+    </div>
+    </form>
+    </div>
+  </div>
+  <div class="outline row" ng-show="submitted == true">
+    <div class="story col-md-12">
+    <p class="text-left">
+    <span class="words">{{words.male_name}}</span> was a <span class="words" >{{words.job_title}}</span> who loved technology. Although  <span ng-if="gender=='Male'">he</span> <span ng-if="gender=='Female'">she </span>  loved parts of <span ng-if="gender=='Male'">his</span> <span ng-if="gender=='Female'">her</span> job, <span ng-if="gender=='Male'">he</span> <span ng-if="gender=='Female'">she</span> absolutely hated  <span class='words'>{{words.tedious_task}}</span> and <span class='words'>{{words.dirty_task}}</span>. So, <span class='words'>{{words.male_name}}</span> met with <span ng-if="gender=='Male'">his</span> <span ng-if="gender=='Female'">her</span> life mentor <span class='words'>{{words.celebrity}}</span> who told <span ng-if="gender=='Male'">him</span> <span ng-if="gender=='Female'">her</span> to learn how to <span class='words'>{{words.useless_skill}}</span> with Thinkful. Thinkful didn't offer a course on <span class='words'>{{words.useless_skill}}</span> so <span ng-if="gender=='Male'">he</span> <span ng-if="gender=='Female'">she</span> studied programming instead.
+    </p>
+    <p class="text-left">
+    What a great decision! With <span ng-if="gender=='Male'">his</span> <span ng-if="gender=='Female'">her</span> new skills, <span class='words'>{{words.male_name}}</span> built a(n) <span class='words'>{{words.adjective}}</span> robot named <span class='words'>{{words.obnoxious_celebrity}}</span> that not only loved <span class='words'>{{words.dirty_task}}</span> but did it <span class='words'>{{words.huge_number}}</span> faster.
+    </p>
+    <div class="form-group">
+      <button class="btn btn-primary" ng-click="reset()">Reset</button>
     </div>
     </div>
   </div>
