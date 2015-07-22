@@ -11,13 +11,15 @@ angular.module('madLibsApp',['ngMessages'])
     useless_skill : "",
     adjective : ""
   };
+
+  $scope.defaults = angular.copy($scope.words);
   
   $scope.gender = "Male";
   
   $scope.submitted = false;
 
   $scope.interacted = function(field) {
-    return $scope.pickListForm.$submitted || field.$touched;
+   return $scope.pickListForm.$submitted || field.$touched;
   };
 
   $scope.submit = function() {
@@ -29,9 +31,8 @@ angular.module('madLibsApp',['ngMessages'])
   $scope.reset = function() {
     $scope.gender = "Female";
     $scope.submitted = false;
-    for(var prop in $scope.words) {
-      $scope.words[prop] = "";
-    }
+    $scope.pickListForm.$setUntouched();
+    $scope.words = angular.copy($scope.defaults);
     $scope.pickListForm.$setPristine();
   };
 
